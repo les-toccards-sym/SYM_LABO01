@@ -33,16 +33,18 @@
         <TextView
             android:id="@+id/main_email_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/main_email_hint" />
+            android:layout_height="29dp"
+            android:text="@string/main_email_hint"
+            android:textAlignment="textStart" />
 
         <EditText
             android:id="@+id/main_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/main_email_title"
-            android:inputType="textEmailAddress"
-            android:hint="@string/main_email_hint" />
+            android:layout_marginTop="10dp"
+            android:hint="@string/main_email_hint"
+            android:inputType="textEmailAddress" />
 
         <TextView
             android:id="@+id/main_password_title"
