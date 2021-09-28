@@ -1,19 +1,11 @@
 package ch.heigvd.iict.sym.labo1
 
-
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
-
-fun Activity.toast( message: String,
-                    duration: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(this, message, duration).show();
-}
 
 class MainActivity : AppCompatActivity() {
 
