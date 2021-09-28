@@ -6,4 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
+    <include layout="@layout/auth_fields"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
