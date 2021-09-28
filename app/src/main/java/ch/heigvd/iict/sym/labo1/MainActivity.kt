@@ -76,6 +76,11 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // check if the email syntax is valide
+            if (!Validator.validateEmail(emailInput.toString())) {
+                email.error = getString(R.string.main_invalid_email)
+                return@setOnClickListener
+            }
             //TODO à compléter...
         }
     }
