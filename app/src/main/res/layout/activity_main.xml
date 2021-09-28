@@ -22,7 +22,7 @@
         android:contentDescription="@string/main_icon_desc" />
 
     <include layout="@layout/auth_fields"/>
-    
+
     <TextView
         android:id="@+id/main_new_account"
         android:layout_width="wrap_content"

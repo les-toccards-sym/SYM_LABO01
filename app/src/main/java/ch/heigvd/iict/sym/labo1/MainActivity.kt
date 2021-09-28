@@ -9,13 +9,11 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import ch.heigvd.iict.sym.labo1.databinding.ActivityMainBinding
 
 fun Activity.toast( message: String,
                     duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show();
 }
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -101,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             toast(text);
-            val intent = Intent(this, Profile::class.java)
+            val intent = Intent(this, ProfileActivity::class.java)
             intent.putExtra("email", emailInput)
             startActivity(intent)
 
