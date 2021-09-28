@@ -26,8 +26,8 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="529dp"
-        android:layout_height="215dp"
+        android:layout_width="551dp"
+        android:layout_height="242dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/main_password"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/app_vertical_separation"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <Button
