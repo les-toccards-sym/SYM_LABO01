@@ -1,19 +1,23 @@
 package ch.heigvd.iict.sym.labo1
 
+
 import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import ch.heigvd.iict.sym.labo1.databinding.ActivityMainBinding
+
+fun Activity.toast( message: String,
+                    duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(this, message, duration).show();
+}
+
 
 class MainActivity : AppCompatActivity() {
-
-    fun Activity.toast( message: String,
-                        duration: Int = Toast.LENGTH_SHORT) {
-        Toast.makeText(this, message, duration).show();
-    }
 
     // on définit une liste de couples e-mail / mot de passe
     // ceci est fait juste pour simplifier ce premier laboratoire,
@@ -89,6 +93,7 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+
             val text: String = if (Pair(emailInput.toString(), passwordInput.toString()) in credentials) {
                 "You big brain boi"
             } else {
@@ -96,6 +101,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             toast(text);
+            val intent = Intent(this, Profile::class.java)
+            intent.putExtra("email", emailInput)
+            startActivity(intent)
+
+            //TODO à compléter...
+
         }
     }
 
