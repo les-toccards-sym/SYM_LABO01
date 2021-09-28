@@ -9,5 +9,5 @@
     <string name="main_create_account">New account</string>
     <string name="main_icon_desc">Application\'s logo</string>
     <string name="main_failed_auth">Your login details are incorrect. Please try again.</string>
-    <string name="main_success_auth">Login succesfull</string>
+    <string name="main_success_auth">Login successful</string>
 </resources>
