@@ -8,12 +8,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 
-class MainActivity : AppCompatActivity() {
+fun Activity.toast( message: String,
+                    duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(this, message, duration).show();
+}
 
-    fun Activity.toast( message: String,
-                        duration: Int = Toast.LENGTH_SHORT) {
-        Toast.makeText(this, message, duration).show();
-    }
+class MainActivity : AppCompatActivity() {
 
     // on définit une liste de couples e-mail / mot de passe
     // ceci est fait juste pour simplifier ce premier laboratoire,
@@ -90,9 +90,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             val text: String = if (Pair(emailInput.toString(), passwordInput.toString()) in credentials) {
-                "You big brain boi"
+                getString(R.string.main_success_auth)
             } else {
-                "Bad boi"
+                getString(R.string.main_failed_auth)
             }
 
             toast(text);
