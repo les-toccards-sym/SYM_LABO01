@@ -1,11 +1,14 @@
 package ch.heigvd.iict.sym.labo1
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,12 +21,25 @@ class MainActivity : AppCompatActivity() {
                                 Pair("user2@heig-vd.ch","abcd")
                             )
 
+    private  val intentLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                toast(result.data?.getStringExtra("streetkey").toString())
+                /*
+                result.data?.getStringExtra("streetkey")
+                result.data?.getStringExtra("citykey")
+                result.data?.getStringExtra("homekey")
+                 */
+            }
+        }
+
     // le modifieur lateinit permet de définir des variables avec un type non-null
     // sans pour autant les initialiser immédiatement
     private lateinit var email: EditText
     private lateinit var password: EditText
     private lateinit var cancelButton: Button
     private lateinit var validateButton: Button
+    private lateinit var registerButton: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // l'appel à la méthode onCreate de la super classe est obligatoire
@@ -38,6 +54,8 @@ class MainActivity : AppCompatActivity() {
         password = findViewById(R.id.main_password)
         cancelButton = findViewById(R.id.main_cancel)
         validateButton = findViewById(R.id.main_validate)
+        registerButton = findViewById(R.id.main_new_account)
+
         // Kotlin, au travers des Android Kotlin Extensions permet d'automatiser encore plus cette
         // étape en créant automatiquement les variables pour tous les éléments graphiques présents
         // dans le layout et disposant d'un id
@@ -94,10 +112,14 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileActivity::class.java)
             intent.putExtra("email", emailInput)
             startActivity(intent)
-
-            //TODO à compléter...
-
         }
+
+
+        registerButton.setOnClickListener {
+            // registerForActivityResult(intent, 1)
+            this.intentLauncher.launch(Intent(this, RegisterActivity::class.java))
+        }
+
     }
 
     // En Kotlin, les variables static ne sont pas tout à fait comme en Java
