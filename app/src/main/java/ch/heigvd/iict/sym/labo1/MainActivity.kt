@@ -95,9 +95,9 @@ class MainActivity : AppCompatActivity() {
 
 
             val text: String = if (Pair(emailInput.toString(), passwordInput.toString()) in credentials) {
-                "You big brain boi"
+                getString(R.string.main_success_auth)
             } else {
-                "Bad boi"
+                getString(R.string.main_failed_auth)
             }
 
             toast(text);

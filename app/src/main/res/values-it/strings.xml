@@ -8,5 +8,7 @@
     <string name="main_cancel_btn">Cancella</string>
     <string name="main_create_account">Nuovo account</string>
     <string name="main_icon_desc">Logo dell\'applicazione</string>
+    <string name="main_failed_auth">I tuoi dati di accesso non sono corretti. Si prega di riprovare.</string>
+    <string name="main_success_auth">Login riuscito</string>
 
 </resources>

@@ -8,4 +8,6 @@
     <string name="main_create_account">Nouveau compte</string>
     <string name="main_icon_desc">Logo de l\'application</string>
     <string name="main_mandatory_field">Le champ obligatoire ne peut pas être laissé vide</string>
+    <string name="main_failed_auth">"Vos données de connexion sont erronées. Veuillez réessayer. "</string>
+    <string name="main_success_auth">Connexion réussie</string>
 </resources>

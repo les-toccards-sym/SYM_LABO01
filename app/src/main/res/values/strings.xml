@@ -1,5 +1,3 @@
-<resources>
-
     <string name="app_name" translatable="false">SYM - Labo 1</string>
     <string name="main_email_hint">Your e-mail address</string>
     <string name="main_password_hint">Your password</string>
@@ -9,5 +7,5 @@
     <string name="main_cancel_btn">Cancel</string>
     <string name="main_create_account">New account</string>
     <string name="main_icon_desc">Application\'s logo</string>
-
-</resources>
+    <string name="main_failed_auth">Your login details are incorrect. Please try again.</string>
+    <string name="main_success_auth">Login succesfull</string>
