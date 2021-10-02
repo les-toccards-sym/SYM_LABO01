@@ -9,17 +9,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import ch.heigvd.iict.sym.labo1.data.IUserRepository
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
-
-    // on définit une liste de couples e-mail / mot de passe
-    // ceci est fait juste pour simplifier ce premier laboratoire,
-    // mais il est évident que de hardcoder ceux-ci est une pratique à éviter à tout prix...
-    // /!\ listOf() retourne une List<T> qui est immuable
-    private val credentials = listOf(
-                                Pair("user1@heig-vd.ch","1234"),
-                                Pair("user2@heig-vd.ch","abcd")
-                            )
 
     private  val intentLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -41,11 +34,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var validateButton: Button
     private lateinit var registerButton: TextView
 
+    private val usersRepository by inject<IUserRepository>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // l'appel à la méthode onCreate de la super classe est obligatoire
         super.onCreate(savedInstanceState)
         // on définit le layout à utiliser pour l'affichage
         setContentView(R.layout.activity_main)
+
+        usersRepository.save(Pair("doran@liip.ch", "liip"))
 
         // on va maintenant lier le code avec les éléments graphiques (champs texts, boutons, etc.)
         // présents dans le layout (nous allons utiliser l'id défini dans le layout, le cast est
@@ -102,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-            val text: String = if (Pair(emailInput.toString(), passwordInput.toString()) in credentials) {
+            val text: String = if (Pair(emailInput.toString(), passwordInput.toString()) in usersRepository.findAll()) {
                 getString(R.string.main_success_auth)
             } else {
                 getString(R.string.main_failed_auth)
