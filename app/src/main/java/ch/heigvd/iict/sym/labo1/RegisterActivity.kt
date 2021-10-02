@@ -1,13 +1,16 @@
 package ch.heigvd.iict.sym.labo1
 
 import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import ch.heigvd.iict.sym.labo1.data.IUserRepository
-import ch.heigvd.iict.sym.labo1.helpers.Validator
-import org.koin.android.ext.android.inject
+import ch.heigvd.iict.sym.labo1.helpers.ValidatorResult
+import ch.heigvd.iict.sym.labo1.helpers.authValidation
+import ch.heigvd.iict.sym.labo1.helpers.validateEmail
+import ch.heigvd.iict.sym.labo1.helpers.validatePassword
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -15,8 +18,6 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var password: EditText
     private lateinit var cancelButton: Button
     private lateinit var validateButton: Button
-
-    private val usersRepository by inject<IUserRepository>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,41 +43,31 @@ class RegisterActivity : AppCompatActivity() {
             val emailInput = email.text?.toString()
             val passwordInput = password.text?.toString()
 
-            // make sure the fields were filled
-            if (emailInput.isNullOrEmpty() or passwordInput.isNullOrEmpty()) {
-
-                // set the error messages
-                if(emailInput.isNullOrEmpty())
+            when (authValidation(emailInput, passwordInput, false)) {
+                ValidatorResult.EMPTY_EMAIL -> {
                     email.error = getString(R.string.main_mandatory_field)
-                if(passwordInput.isNullOrEmpty())
+                }
+                ValidatorResult.EMPTY_PASSWD -> {
                     password.error = getString(R.string.main_mandatory_field)
+                }
+                ValidatorResult.EMPTY_BOTH -> {
+                    email.error = getString(R.string.main_mandatory_field)
+                    password.error = getString(R.string.main_mandatory_field)
+                }
+                ValidatorResult.INVALID_EMAIL -> {
+                    email.error = getString(R.string.invalid_email)
+                }
+                ValidatorResult.INVALID_PASSWD -> password.error = getString(R.string.invalid_password)
+                ValidatorResult.OK -> {
+                    setResult(Activity.RESULT_OK, Intent().apply {
+                        putExtra("email", emailInput.toString())
+                        putExtra("password", passwordInput.toString())
+                    })
+                    finish()
+                }
 
-                return@setOnClickListener
             }
-
-            // check if the email syntax is valid
-            if (!Validator.validateEmail(emailInput.toString())) {
-                email.error = getString(R.string.invalid_email)
-                return@setOnClickListener
-            }
-
-            // check if the password follows the
-            if (!Validator.validatePassword(passwordInput.toString())) {
-                password.error = getString(R.string.invalid_password)
-                return@setOnClickListener
-            }
-
-            // check if the user already exists
-            if (usersRepository.findByEmail(emailInput.toString()) != null) {
-                toast("User already exists")
-                return@setOnClickListener
-            }
-
-            // everything is gucci, we can save the new users
-            usersRepository.save(Pair(emailInput.toString(), passwordInput.toString()))
-
-            setResult(Activity.RESULT_OK)
-            finish()
+            return@setOnClickListener
         }
     }
 }

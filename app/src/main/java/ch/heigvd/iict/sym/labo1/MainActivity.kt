@@ -9,20 +9,21 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
-import ch.heigvd.iict.sym.labo1.data.IUserRepository
-import org.koin.android.ext.android.inject
+import ch.heigvd.iict.sym.labo1.data.InMemoryUserRepository
+import ch.heigvd.iict.sym.labo1.helpers.ValidatorResult
+import ch.heigvd.iict.sym.labo1.helpers.authValidation
+import ch.heigvd.iict.sym.labo1.helpers.validateEmail
 
 class MainActivity : AppCompatActivity() {
 
-    private  val intentLauncher =
+    private val intentLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                toast(result.data?.getStringExtra("streetkey").toString())
-                /*
-                result.data?.getStringExtra("streetkey")
-                result.data?.getStringExtra("citykey")
-                result.data?.getStringExtra("homekey")
-                 */
+                usersRepository.save(Pair(
+                    result.data?.getStringExtra("email").toString(),
+                    result.data?.getStringExtra("password").toString()
+                ))
+                toast("Account successfully created")
             }
         }
 
@@ -34,15 +35,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var validateButton: Button
     private lateinit var registerButton: TextView
 
-    private val usersRepository by inject<IUserRepository>()
+    private val usersRepository = InMemoryUserRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // l'appel à la méthode onCreate de la super classe est obligatoire
         super.onCreate(savedInstanceState)
         // on définit le layout à utiliser pour l'affichage
         setContentView(R.layout.activity_main)
-
-        usersRepository.save(Pair("doran@liip.ch", "liip"))
 
         // on va maintenant lier le code avec les éléments graphiques (champs texts, boutons, etc.)
         // présents dans le layout (nous allons utiliser l'id défini dans le layout, le cast est
@@ -63,6 +62,7 @@ class MainActivity : AppCompatActivity() {
             //on va vider les champs de la page de login lors du clique sur le bouton Cancel
             email.text?.clear()
             password.text?.clear()
+
             // on annule les éventuels messages d'erreur présents sur les champs de saisie
             email.error = null
             password.error = null
@@ -77,40 +77,40 @@ class MainActivity : AppCompatActivity() {
             val emailInput = email.text?.toString()
             val passwordInput = password.text?.toString()
 
-            if(emailInput.isNullOrEmpty() or passwordInput.isNullOrEmpty()) {
-                // on affiche un message dans les logs de l'application
-                Log.d(TAG, "Au moins un des deux champs est vide")
-                // on affiche un message d'erreur sur les champs qui n'ont pas été renseignés
-                // la méthode getString permet de charger un String depuis les ressources de
-                // l'application à partir de son id
-                if(emailInput.isNullOrEmpty())
+            when (authValidation(emailInput, passwordInput, false)) {
+                ValidatorResult.EMPTY_EMAIL -> {
+                    Log.d(TAG, "Au moins un des deux champs est vide")
                     email.error = getString(R.string.main_mandatory_field)
-                if(passwordInput.isNullOrEmpty())
+                }
+                ValidatorResult.EMPTY_PASSWD -> {
+                    Log.d(TAG, "Au moins un des deux champs est vide")
                     password.error = getString(R.string.main_mandatory_field)
-                // Pour les fonctions lambda, on doit préciser à quelle fonction l'appel à return
-                // doit être appliqué
-                return@setOnClickListener
+                }
+                ValidatorResult.EMPTY_BOTH -> {
+                    Log.d(TAG, "Au moins un des deux champs est vide")
+                    email.error = getString(R.string.main_mandatory_field)
+                    password.error = getString(R.string.main_mandatory_field)
+                }
+                ValidatorResult.INVALID_EMAIL -> {
+                    email.error = getString(R.string.invalid_email)
+                }
+                ValidatorResult.OK -> {
+                    if (Pair(emailInput.toString(), passwordInput.toString()) in usersRepository.findAll()) {
+                        toast(getString(R.string.main_success_auth))
+                        startActivity(Intent(this, ProfileActivity::class.java).apply {
+                            putExtra("email", emailInput)
+                        })
+                    } else {
+                        toast(getString(R.string.main_failed_auth))
+                    }
+                }
+                // This case is never possible since `checkPwdPolicy` is set to false
+                // Maybe throw exception or log
+                ValidatorResult.INVALID_PASSWD -> Log.e(TAG, "Impossible case happened")
             }
 
-            // check if the email syntax is valide
-            if (!Validator.validateEmail(emailInput.toString())) {
-                email.error = getString(R.string.main_invalid_email)
-                return@setOnClickListener
-            }
-
-
-            val text: String = if (Pair(emailInput.toString(), passwordInput.toString()) in usersRepository.findAll()) {
-                getString(R.string.main_success_auth)
-            } else {
-                getString(R.string.main_failed_auth)
-            }
-
-            toast(text);
-            val intent = Intent(this, ProfileActivity::class.java)
-            intent.putExtra("email", emailInput)
-            startActivity(intent)
+            return@setOnClickListener
         }
-
 
         registerButton.setOnClickListener {
             // registerForActivityResult(intent, 1)

@@ -13,10 +13,6 @@ class InMemoryUserRepository : IUserRepository {
 
     override fun findAll(): List<Pair<String, String>> = this.users
 
-    override fun findByEmail(email: String): Pair<String, String>? = this.users.find {
-        it.first == email
-    }
-
     override fun save(user: Pair<String, String>) {
         this.users = this.users + user
     }
