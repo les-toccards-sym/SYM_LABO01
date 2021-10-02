@@ -11,4 +11,5 @@
     <string name="main_failed_auth">"Deine Anmeldedaten sind nicht korrekt. Versuche es nochmals. "</string>
     <string name="main_success_auth">Anmeldung erfolgreich</string>
     <string name="invalid_password">Die Passwortlänge muss zwischen 4 und 64 liegen.</string>
+    <string name="register_title">Neues Konto erstellen</string>
 </resources>
