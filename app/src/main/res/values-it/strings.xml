@@ -11,5 +11,6 @@
     <string name="main_failed_auth">I tuoi dati di accesso non sono corretti. Si prega di riprovare.</string>
     <string name="main_success_auth">Login riuscito</string>
     <string name="invalid_password">La lunghezza della password deve essere compresa tra 4 e 64</string>
+    <string name="register_title">Creare un nuovo account</string>
 
 </resources>

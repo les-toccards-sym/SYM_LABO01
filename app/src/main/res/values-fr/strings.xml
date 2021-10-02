@@ -11,4 +11,5 @@
     <string name="main_failed_auth">"Vos données de connexion sont erronées. Veuillez réessayer. "</string>
     <string name="main_success_auth">Connexion réussie</string>
     <string name="invalid_password">La longueur du mot de passe doit être comprise entre 4 et 64</string>
+    <string name="register_title">Créer un nouveau compte</string>
 </resources>
