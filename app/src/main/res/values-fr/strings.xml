@@ -3,11 +3,12 @@
     <string name="main_email_hint">Votre adresse e-mail</string>
     <string name="main_password_hint">"Votre mot de passe   "</string>
     <string name="main_validate_btn">Confirmer</string>
-    <string name="main_invalid_email">L\'e-mail donné n\'est pas valide</string>
+    <string name="invalid_email">L\'e-mail donné n\'est pas valide</string>
     <string name="main_cancel_btn">Annuler</string>
     <string name="main_create_account">Nouveau compte</string>
     <string name="main_icon_desc">Logo de l\'application</string>
     <string name="main_mandatory_field">Le champ obligatoire ne peut pas être laissé vide</string>
     <string name="main_failed_auth">"Vos données de connexion sont erronées. Veuillez réessayer. "</string>
     <string name="main_success_auth">Connexion réussie</string>
+    <string name="invalid_password">La longueur du mot de passe doit être comprise entre 4 et 64</string>
 </resources>

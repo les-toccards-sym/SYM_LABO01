@@ -1,4 +1,4 @@
-package ch.heigvd.iict.sym.labo1
+package ch.heigvd.iict.sym.labo1.helpers
 
 class Validator {
 

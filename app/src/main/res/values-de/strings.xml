@@ -3,11 +3,12 @@
     <string name="main_email_hint">Ihre E-Mail Adresse</string>
     <string name="main_password_hint">Ihr Passwort</string>
     <string name="main_mandatory_field">Erforderliches Feld kann nicht leer gelassen werden</string>
-    <string name="main_invalid_email">Ungültige E-Mail angegeben</string>
+    <string name="invalid_email">Ungültige E-Mail angegeben</string>
     <string name="main_validate_btn">Validieren</string>
     <string name="main_cancel_btn">Abbrechen</string>
     <string name="main_create_account">Neuer Account</string>
     <string name="main_icon_desc">Das Logo der Anwendung</string>
     <string name="main_failed_auth">"Deine Anmeldedaten sind nicht korrekt. Versuche es nochmals. "</string>
     <string name="main_success_auth">Anmeldung erfolgreich</string>
+    <string name="invalid_password">Die Passwortlänge muss zwischen 4 und 64 liegen.</string>
 </resources>
