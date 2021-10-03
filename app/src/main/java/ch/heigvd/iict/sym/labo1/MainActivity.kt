@@ -10,7 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import ch.heigvd.iict.sym.labo1.data.InMemoryUserRepository
-import ch.heigvd.iict.sym.labo1.helpers.ValidatorResult
+import ch.heigvd.iict.sym.labo1.helpers.authFieldsValidation
 import ch.heigvd.iict.sym.labo1.helpers.authValidation
 import ch.heigvd.iict.sym.labo1.helpers.validateEmail
 
@@ -77,39 +77,31 @@ class MainActivity : AppCompatActivity() {
             val emailInput = email.text?.toString()
             val passwordInput = password.text?.toString()
 
-            when (authValidation(emailInput, passwordInput, false)) {
-                ValidatorResult.EMPTY_EMAIL -> {
-                    Log.d(TAG, "Au moins un des deux champs est vide")
-                    email.error = getString(R.string.main_mandatory_field)
-                }
-                ValidatorResult.EMPTY_PASSWD -> {
-                    Log.d(TAG, "Au moins un des deux champs est vide")
-                    password.error = getString(R.string.main_mandatory_field)
-                }
-                ValidatorResult.EMPTY_BOTH -> {
-                    Log.d(TAG, "Au moins un des deux champs est vide")
-                    email.error = getString(R.string.main_mandatory_field)
-                    password.error = getString(R.string.main_mandatory_field)
-                }
-                ValidatorResult.INVALID_EMAIL -> {
-                    email.error = getString(R.string.invalid_email)
-                }
-                ValidatorResult.OK -> {
-                    if (Pair(emailInput.toString(), passwordInput.toString()) in usersRepository.findAll()) {
-                        toast(getString(R.string.main_success_auth))
-                        startActivity(Intent(this, ProfileActivity::class.java).apply {
-                            putExtra("email", emailInput)
-                        })
-                    } else {
-                        toast(getString(R.string.main_failed_auth))
-                    }
-                }
-                // This case is never possible since `checkPwdPolicy` is set to false
-                // Maybe throw exception or log
-                ValidatorResult.INVALID_PASSWD -> Log.e(TAG, "Impossible case happened")
+            val res = authFieldsValidation(
+                emailInput, passwordInput, policyCheck = false, this
+            )
+
+            if (!res["email_error"].isNullOrBlank() or !res["passwd_error"].isNullOrBlank()) {
+                Log.d(TAG, "Au moins un des deux champs est vide")
+
+                if (!res["email_error"].isNullOrBlank())
+                     email.error = res["email_error"].toString()
+
+                if (!res["passwd_error"].isNullOrBlank())
+                    password.error = res["passwd_error"].toString()
+
+                return@setOnClickListener
             }
 
-            return@setOnClickListener
+
+            if (Pair(emailInput.toString(), passwordInput.toString()) in usersRepository.findAll()) {
+                toast(getString(R.string.main_success_auth))
+                startActivity(Intent(this, ProfileActivity::class.java).apply {
+                    putExtra("email", emailInput)
+                })
+            } else {
+                toast(getString(R.string.main_failed_auth))
+            }
         }
 
         registerButton.setOnClickListener {

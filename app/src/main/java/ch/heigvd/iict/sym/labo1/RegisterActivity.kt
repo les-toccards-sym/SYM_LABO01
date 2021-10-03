@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import ch.heigvd.iict.sym.labo1.helpers.ValidatorResult
-import ch.heigvd.iict.sym.labo1.helpers.authValidation
-import ch.heigvd.iict.sym.labo1.helpers.validateEmail
-import ch.heigvd.iict.sym.labo1.helpers.validatePassword
+import ch.heigvd.iict.sym.labo1.helpers.*
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -43,31 +40,25 @@ class RegisterActivity : AppCompatActivity() {
             val emailInput = email.text?.toString()
             val passwordInput = password.text?.toString()
 
-            when (authValidation(emailInput, passwordInput, false)) {
-                ValidatorResult.EMPTY_EMAIL -> {
-                    email.error = getString(R.string.main_mandatory_field)
-                }
-                ValidatorResult.EMPTY_PASSWD -> {
-                    password.error = getString(R.string.main_mandatory_field)
-                }
-                ValidatorResult.EMPTY_BOTH -> {
-                    email.error = getString(R.string.main_mandatory_field)
-                    password.error = getString(R.string.main_mandatory_field)
-                }
-                ValidatorResult.INVALID_EMAIL -> {
-                    email.error = getString(R.string.invalid_email)
-                }
-                ValidatorResult.INVALID_PASSWD -> password.error = getString(R.string.invalid_password)
-                ValidatorResult.OK -> {
-                    setResult(Activity.RESULT_OK, Intent().apply {
-                        putExtra("email", emailInput.toString())
-                        putExtra("password", passwordInput.toString())
-                    })
-                    finish()
-                }
+            val res = authFieldsValidation(
+                emailInput, passwordInput, policyCheck = true, this
+            )
 
+            if (!res["email_error"].isNullOrBlank() or !res["passwd_error"].isNullOrBlank()) {
+                if (!res["email_error"].isNullOrBlank())
+                    email.error = res["email_error"].toString()
+
+                if (!res["passwd_error"].isNullOrBlank())
+                    password.error = res["passwd_error"].toString()
+
+                return@setOnClickListener
             }
-            return@setOnClickListener
+
+            setResult(Activity.RESULT_OK, Intent().apply {
+                putExtra("email", emailInput.toString())
+                putExtra("password", passwordInput.toString())
+            })
+            finish()
         }
     }
 }

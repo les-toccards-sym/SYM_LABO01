@@ -1,13 +1,9 @@
 package ch.heigvd.iict.sym.labo1.helpers
 
-enum class ValidatorResult {
-    OK,
-    EMPTY_EMAIL,
-    EMPTY_PASSWD,
-    EMPTY_BOTH,
-    INVALID_EMAIL,
-    INVALID_PASSWD
-}
+import android.content.Context
+import android.content.res.Resources
+import android.widget.EditText
+import ch.heigvd.iict.sym.labo1.R
 
 fun validateEmail(email: String): Boolean {
     val regex = """^[a-zA-Z0-9_]+(?:.[a-zA-Z0-9_-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$""".toRegex()
@@ -28,27 +24,32 @@ fun validatePassword(pwd: String): Boolean {
     return pwd.length in min..max
 }
 
-fun authValidation(email: String?, passwd: String?, checkPwdPolicy: Boolean): ValidatorResult {
+fun authFieldsValidation(
+    email: String?,
+    passwd: String?,
+    policyCheck: Boolean,
+    context: Context): Map<String, String> {
+
+    val errors = mutableMapOf(
+        "email_error" to "",
+        "passwd_error" to ""
+    )
 
     if (email.isNullOrEmpty() or passwd.isNullOrEmpty()) {
-        var emptynessResult = ValidatorResult.EMPTY_BOTH
-
         //  set the error messages
         if (email.isNullOrEmpty())
-            emptynessResult = ValidatorResult.EMPTY_EMAIL
+            errors["email_error"] = context.getString(R.string.main_mandatory_field)
         if (passwd.isNullOrEmpty())
-            emptynessResult = ValidatorResult.EMPTY_PASSWD
-        if (email.isNullOrEmpty() and passwd.isNullOrEmpty())
-            emptynessResult = ValidatorResult.EMPTY_BOTH
+            errors["passwd_error"] = context.getString(R.string.main_mandatory_field)
 
-        return emptynessResult
+        return errors
     }
 
     if (!validateEmail(email.toString()))
-        return ValidatorResult.INVALID_EMAIL
+        errors["email_error"] = context.getString(R.string.invalid_email)
 
-    if (checkPwdPolicy and !validatePassword(passwd.toString()))
-        return ValidatorResult.INVALID_PASSWD
+    if (policyCheck and !validatePassword(passwd.toString()))
+        errors["passwd_error"] = context.getString(R.string.invalid_password)
 
-    return ValidatorResult.OK
+    return errors
 }
