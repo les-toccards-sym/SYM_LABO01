@@ -12,4 +12,6 @@
     <string name="invalid_password">Password length must be between 4 and 64</string>
     <string name="invalid_email">Invalid e-mail given</string>
     <string name="register_title">Create new account</string>
+    <string name="bienvenu">Welcome !</string>
+    <string name="votre_email">Your email :</string>
 </resources>

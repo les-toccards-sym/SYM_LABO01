@@ -11,8 +11,7 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import ch.heigvd.iict.sym.labo1.data.InMemoryUserRepository
 import ch.heigvd.iict.sym.labo1.helpers.authFieldsValidation
-import ch.heigvd.iict.sym.labo1.helpers.authValidation
-import ch.heigvd.iict.sym.labo1.helpers.validateEmail
+
 
 class MainActivity : AppCompatActivity() {
 
