@@ -1,7 +1,6 @@
 package ch.heigvd.iict.sym.labo1.helpers
 
 import android.content.Context
-import android.content.res.Resources
 import android.widget.EditText
 import ch.heigvd.iict.sym.labo1.R
 
@@ -25,31 +24,38 @@ fun validatePassword(pwd: String): Boolean {
 }
 
 fun authFieldsValidation(
-    email: String?,
-    passwd: String?,
+    email: EditText,
+    passwd: EditText,
     policyCheck: Boolean,
-    context: Context): Map<String, String> {
+    context: Context): Boolean {
 
-    val errors = mutableMapOf(
-        "email_error" to "",
-        "passwd_error" to ""
-    )
+    //on réinitialise les messages d'erreur
+    email.error = null
+    passwd.error = null
 
-    if (email.isNullOrEmpty() or passwd.isNullOrEmpty()) {
-        //  set the error messages
-        if (email.isNullOrEmpty())
-            errors["email_error"] = context.getString(R.string.main_mandatory_field)
-        if (passwd.isNullOrEmpty())
-            errors["passwd_error"] = context.getString(R.string.main_mandatory_field)
+    //on récupère le contenu de deux champs dans des variables de type String
+    val emailInput = email.text?.toString()
+    val passwdInput = passwd.text?.toString()
 
-        return errors
+    if (emailInput.isNullOrEmpty() or passwdInput.isNullOrEmpty()) {
+        if (emailInput.isNullOrEmpty())
+            email.error = context.getString(R.string.main_mandatory_field)
+
+        if (passwdInput.isNullOrEmpty())
+            passwd.error = context.getString(R.string.main_mandatory_field)
+
+        return false
+    } else {
+        if (!validateEmail(emailInput.toString())) {
+            email.error = context.getString(R.string.invalid_email)
+            return false
+        }
+
+        if (policyCheck and !validatePassword(passwdInput.toString())) {
+            passwd.error = context.getString(R.string.invalid_password)
+            return false
+        }
     }
 
-    if (!validateEmail(email.toString()))
-        errors["email_error"] = context.getString(R.string.invalid_email)
-
-    if (policyCheck and !validatePassword(passwd.toString()))
-        errors["passwd_error"] = context.getString(R.string.invalid_password)
-
-    return errors
+    return true
 }

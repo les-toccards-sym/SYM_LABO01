@@ -32,33 +32,15 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         validateButton.setOnClickListener {
-            // reset error messages
-            email.error = null
-            password.error = null
-
-            // get the inputed values
-            val emailInput = email.text?.toString()
-            val passwordInput = password.text?.toString()
-
-            val res = authFieldsValidation(
-                emailInput, passwordInput, policyCheck = true, this
-            )
-
-            if (!res["email_error"].isNullOrBlank() or !res["passwd_error"].isNullOrBlank()) {
-                if (!res["email_error"].isNullOrBlank())
-                    email.error = res["email_error"].toString()
-
-                if (!res["passwd_error"].isNullOrBlank())
-                    password.error = res["passwd_error"].toString()
-
-                return@setOnClickListener
+            if (authFieldsValidation(email, password, policyCheck = true, this)) {
+                setResult(Activity.RESULT_OK, Intent().apply {
+                    putExtra("email", email.text?.toString().toString())
+                    putExtra("password", password.text?.toString().toString())
+                })
+                finish()
             }
 
-            setResult(Activity.RESULT_OK, Intent().apply {
-                putExtra("email", emailInput.toString())
-                putExtra("password", passwordInput.toString())
-            })
-            finish()
+            return@setOnClickListener
         }
     }
 }

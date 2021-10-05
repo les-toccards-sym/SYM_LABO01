@@ -4,14 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import ch.heigvd.iict.sym.labo1.data.InMemoryUserRepository
 import ch.heigvd.iict.sym.labo1.helpers.authFieldsValidation
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -68,39 +66,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         validateButton.setOnClickListener {
-            //on réinitialise les messages d'erreur
-            email.error = null
-            password.error = null
+            if (authFieldsValidation(email, password, policyCheck = false, this)) {
+                val emailInput = email.text?.toString()
+                val passwordInput = password.text?.toString()
 
-            //on récupère le contenu de deux champs dans des variables de type String
-            val emailInput = email.text?.toString()
-            val passwordInput = password.text?.toString()
-
-            val res = authFieldsValidation(
-                emailInput, passwordInput, policyCheck = false, this
-            )
-
-            if (!res["email_error"].isNullOrBlank() or !res["passwd_error"].isNullOrBlank()) {
-                Log.d(TAG, "Au moins un des deux champs est vide")
-
-                if (!res["email_error"].isNullOrBlank())
-                     email.error = res["email_error"].toString()
-
-                if (!res["passwd_error"].isNullOrBlank())
-                    password.error = res["passwd_error"].toString()
-
-                return@setOnClickListener
+                if (Pair(emailInput.toString(), passwordInput.toString()) in usersRepository.findAll()) {
+                    toast(getString(R.string.main_success_auth))
+                    startActivity(Intent(this, ProfileActivity::class.java).apply {
+                        putExtra("email", emailInput)
+                    })
+                } else {
+                    toast(getString(R.string.main_failed_auth))
+                }
             }
 
-
-            if (Pair(emailInput.toString(), passwordInput.toString()) in usersRepository.findAll()) {
-                toast(getString(R.string.main_success_auth))
-                startActivity(Intent(this, ProfileActivity::class.java).apply {
-                    putExtra("email", emailInput)
-                })
-            } else {
-                toast(getString(R.string.main_failed_auth))
-            }
+            return@setOnClickListener
         }
 
         registerButton.setOnClickListener {
