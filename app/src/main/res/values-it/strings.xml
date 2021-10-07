@@ -14,5 +14,6 @@
     <string name="register_title">Creare un nuovo account</string>
     <string name="bienvenu">Benvenuti !</string>
     <string name="votre_email">La tua email :</string>
+    <string name="failed_auth_title">Autenticazione fallita</string>
 
 </resources>

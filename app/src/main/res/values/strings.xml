@@ -14,4 +14,6 @@
     <string name="register_title">Create new account</string>
     <string name="bienvenu">Welcome !</string>
     <string name="votre_email">Your email :</string>
+    <string name="failed_auth_title">Failed authentication</string>
+    <string name="ok" translatable="false">Ok</string>
 </resources>

@@ -1,6 +1,7 @@
 package ch.heigvd.iict.sym.labo1
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -76,7 +77,13 @@ class MainActivity : AppCompatActivity() {
                         putExtra("email", emailInput)
                     })
                 } else {
-                    toast(getString(R.string.main_failed_auth))
+                    AlertDialog.Builder(this).apply {
+                        setTitle(R.string.failed_auth_title)
+                        setMessage(getString(R.string.main_failed_auth))
+                        setPositiveButton(R.string.ok) {dialog, _ ->
+                            dialog.dismiss()
+                        }
+                    }.create().show()
                 }
             }
 
