@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                 val emailInput = email.text?.toString()
                 val passwordInput = password.text?.toString()
 
-                if (Pair(emailInput.toString(), passwordInput.toString()) in usersRepository.findAll()) {
+                if (usersRepository.findByEmailAndPasswd(emailInput.toString(), passwordInput.toString())) {
                     toast(getString(R.string.main_success_auth))
                     startActivity(Intent(this, ProfileActivity::class.java).apply {
                         putExtra("email", emailInput)
