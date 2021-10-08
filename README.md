@@ -72,7 +72,7 @@ Pour commencer nous avons commencé par crée le fichier ```ProfileActivity.kt``
 Comme dit précédemment, l'Intent permet de passer des paramètres. Dans notre cas, c'est pour le lancement d'une nouvelle activité avec comme paramètre l'addresse mail de l'utilisateur qui vient de se connecter. Pour ce faire on utilise la méthode ```putExtra()``` qui permet de lier un identifiant avec une variable existante dans l'activité "principale". Pour récupéré la valeur dans la seconde activité, on utilise l'appel ```intent.getStringExtra()``` qui prend un identifiant en paramètre et on stocke le résultat dans une variable.
 
 ### Permissions simples
-Afin d'autorisé l'application à accédé à internet, nous avons du rajouter la ligne ```<uses-permission android:name="android.permission.INTERNET"/>``` dans le fichier ```AndroidManifest.xml```. 
+Afin d'autorisé l'application à accédé à internet, nous avons du rajouter la ligne ```<uses-permission android:name="android.permission.INTERNET"/>``` dans le fichier ```AndroidManifest.xml```. Le fichier manifest décrit les informations essentielles à propos de l'application aux outils de builds, à l'OS et au service Google Play.
 
 
 ## Navigation entre les activités
