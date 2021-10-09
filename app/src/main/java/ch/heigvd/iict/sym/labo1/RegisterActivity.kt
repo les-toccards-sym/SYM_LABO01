@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import ch.heigvd.iict.sym.labo1.helpers.*
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : BaseActivity() {
 
     private lateinit var email: EditText
     private lateinit var password: EditText

@@ -12,7 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import ch.heigvd.iict.sym.labo1.data.InMemoryUserRepository
 import ch.heigvd.iict.sym.labo1.helpers.authFieldsValidation
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private val intentLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

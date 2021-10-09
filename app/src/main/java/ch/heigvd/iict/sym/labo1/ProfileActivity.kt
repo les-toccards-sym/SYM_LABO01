@@ -6,7 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import ch.heigvd.iict.sym.labo1.network.ImageDownloader
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
