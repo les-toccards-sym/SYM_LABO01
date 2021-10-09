@@ -82,6 +82,7 @@ Afin d'autorisé l'application à accédé à internet, nous avons du rajouter l
 TODO Doran
 
 ### Affichage d'une image
+Dans le fichier "drawable" nous avons rajouté l'image que nous souhaitions incorporé à l'application. Ensuite nous avec crée une balise "ImageView" dans le fichier ```activity_register.xml``` qui contient toutes les caractérstique de notre image. Nous lui avons ensuite renseigner le chemin d'accès de l'image avec la ligne : ```android:src="@drawable/pand_roux"```. Le dossier "res/drawable" est l'emplacement des images par défaut. En général on y trouve tous les drawable qui ne dépendent pas de la taille de l'écran. Pour les images matricielles, si l'on veut garentir la bonne qualité de notre image peut importe l'appareil, il est nécessaire de fournir différentes version de l'image : MDPI, HDPI, XHDPI, XXHDPI,XXXHDI. Si l'image n'est pas disponible, android va soomer l'image pour qu'elle utilise l'espace qui lui est réservé. Cela va bien évidement déformer l'image et réduire ça qualité. C'est donc beaucoup plus judicieux d'utiliser des images vectorielles car elles sont scalables et ne perdent pas en qualité. Cependant les images vectorielles sont plus généralement utilisé pour des illustrations comme des logos et non pour des images.
 
 ### Factorisation du code
 
