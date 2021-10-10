@@ -115,7 +115,24 @@ TODO Doran
 Dans le fichier "drawable" nous avons rajouté l'image que nous souhaitions incorporé à l'application. Ensuite nous avec crée une balise "ImageView" dans le fichier ```activity_register.xml``` qui contient toutes les caractérstique de notre image. Nous lui avons ensuite renseigner le chemin d'accès de l'image avec la ligne : ```android:src="@drawable/pand_roux"```. Le dossier "res/drawable" est l'emplacement des images par défaut. En général on y trouve tous les drawable qui ne dépendent pas de la taille de l'écran. Pour les images matricielles, si l'on veut garentir la bonne qualité de notre image peut importe l'appareil, il est nécessaire de fournir différentes version de l'image : MDPI, HDPI, XHDPI, XXHDPI,XXXHDI. Si l'image n'est pas disponible, android va soomer l'image pour qu'elle utilise l'espace qui lui est réservé. Cela va bien évidement déformer l'image et réduire ça qualité. C'est donc beaucoup plus judicieux d'utiliser des images vectorielles car elles sont scalables et ne perdent pas en qualité. Cependant les images vectorielles sont plus généralement utilisé pour des illustrations comme des logos et non pour des images.
 
 ### Factorisation du code
+Étant donné que l'activité main (i.e. page de login) et l'activité de register on tout deux besoin du même processus de validation, nous avons créé une fonction qui contient ce processus. Cette fonction prend, entre autres, en argument les `EditText` (email et mot de passe) du formulaire (i.e. les champs input que l'utilisateur va remplir) à valider, puis vérifie que les champs ne soit pas vide, que la syntaxe de l'email soit correct (Voir [ici](#Vérification du format de l'email)) et que le mot de passe saisie respect la police de mot de passe que nous avons définie. Cette dernière validation est seulement effectuée si l'arguement `policyCheck` est a **true**. Dans le cas où il y a une erreur, on met un/des messages d'erreurs. IL nous faut donc aussi le contexte dans lequel nous sommes pour  récupérer les textes d'erreur définit dans les fichiers de traduction.
 
-TODO Doran
+```kotlin
+fun authFieldsValidation(
+    email: EditText,
+    passwd: EditText,
+    policyCheck: Boolean,
+    context: Context): Boolean {
+    // ...  
+}
+```
+
+> <u>Remarque</u>:Pour question de simplicité et pour mieux comprendre certains concepts d'Android/Kotlin, le formulaire pour créer un compte est identique à celui pour la connection. Dans le cas d'une réelle application, le formulaire contiendrait des champs supplémentaires (e.g. confirmation de mot de passe) et aurait besoin d'autre validation (e.g. qu'il n'y a pas déjà un compte avec le nom d'utilisateur renseigné).
+
+Pour la factorisation des layout, il suffit de mettre le code en commun dans un autre fichier XML, puis de l'inclure dans les layouts qui vont l'utiliser.
+
+```xml
+<include layout="@layout/<filename>"/>
+```
 
 ### Cycle de vie
