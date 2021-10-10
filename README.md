@@ -77,7 +77,7 @@ credentials.any {
 }
 ```
 
-Dans un cas réel (i.e. non-académique), il faudrait que les mots de passe stockés dans la base de données (ici en mémoire) soient hashé  (avec un algorithme tel que `argon2`) et donc avant de pouvoir effectuer la chercher, le mot de passe saisie doit être hashé.
+Dans un cas réel (i.e. non-académique), il faudrait que les mots de passe stockés dans la base de données (ici en mémoire) soient hashé  (avec un algorithme tel que `argon2`) et donc avant de pouvoir effectuer la recherche, le mot de passe saisi doit être hashé.
 
 
 
@@ -136,3 +136,16 @@ Pour la factorisation des layout, il suffit de mettre le code en commun dans un 
 ```
 
 ### Cycle de vie
+Afin d'implémenter les logs des cycles de vies, nous avons simplement créé une classe `BaseActivity` qui hérite de `AppCompatActivity`. Cette classe contient uniquement les logs pours chacun des cycles et nos autres activité hérite de la classe `BaseActivity`.  
+
+Les différentes méthodes sont invoquées à des moments bien précis:  
+- *onCreate*: Lorsque l'activité est créée.
+- *onStart*: L'activité devient visible à l'utilisateur, suivi de *onResume* si l'activité passe au premier plan
+- *onRestart*: L'activité était stoppée, toujours suivi de *onStart*.
+- *onResume*: L'activité est au premier plan, l'utilisateur interagit avec.
+- *onPause*: L'activité passe en arrière plan, mais existe encore.
+- *onStop*: L'activité n'est plus visible à l'utilisateur. Peut être suivi de *onRestart* ou *onDestroy*
+- *onDestroy*: L'activité est détruite, soit par un appel à finish() ou pour libérer de la mémoire.
+
+Pour illuster l'enchaînement des appels, la doc Android fournit un organigramme:  
+![](doc/activity_lifecycle.png)
