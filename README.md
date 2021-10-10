@@ -6,7 +6,37 @@
 
 ### Langue de l'interface
 
-// TODO Doran
+Avoir les textes de l'application dans un fichier XML externe rendra plus simple la réutilisation des textes. Quand l'on souhaite les utiliser, il suffit de la référencer dans le code en utilisant son nom `R.id.<name>`. Dans le cas ou nous avons une application multi-langue, il suffit de définir d'autre fichier XML pour les langues que nous souhaitons utiliser. Ensuite Android va référencer la bonne traduction selon la langue de l'appareil.
+
+**Langue par défaut**
+
+```xml
+<resources>
+    <string name="main_email_hint">Your e-mail address</string>
+    // ...
+</resources>
+```
+
+**Traduction**
+
+```xml
+<resources>
+    <string name="main_email_hint">Votre adresse e-mail</string>
+	// ...
+</resources>
+```
+
+Tous les fichiers de traduction `strings.xml` se trouvent dans un dossier `values/` dans les ressources de l'application: `app/src/main/res`. Les langues "supplémentaires" se trouvent dans un dossier avec l'abréviation de celle-ci (e.g. français -> `values-fr`).
+
+> Remarques: La langue par défaut se trouve dans le dossier `values/`.
+
+![](doc/language.png)
+
+
+
+
+
+Dans le cas où il manquerait une traduction pour l'une des langues additionnelle, l'application va compiler sans problème et  elle va utiliser la/les traductions de la langue par défaut pour toutes les valeurs manquante. Par contre, si c'est une traduction de la langue par défaut qui est  manquante, l'application ne va pas pouvoir compiler, car Android ne  saura pas quoi utiliser comme valeurs lors du référencement de cette  valeur. Un comme si l'on souhaite utiliser une variable non déclarée.
 
 ### Champs textuels de saisie
 Pour l'addresse mail nous avons rajouté dans auth_fields.xml les lignes ```android:inputType="textEmailAddress"``` pour la saisie du mail et ```android:inputType="textPassword"``` pour la saisie du mot de passe.
