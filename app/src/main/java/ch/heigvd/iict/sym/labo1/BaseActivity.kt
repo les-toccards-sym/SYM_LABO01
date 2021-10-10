@@ -16,6 +16,11 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onStart()
     }
 
+    override fun onRestart() {
+        print("onRestart")
+        super.onRestart()
+    }
+
     override fun onResume() {
         print("onResume")
         super.onResume()
