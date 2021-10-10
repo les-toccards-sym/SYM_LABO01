@@ -1,10 +1,14 @@
+/**
+ * @author Yohann Polus <yohann.polus@heig-vd.ch>
+ * @author Melvin Merk <melvin.merk@heig-vd.ch>
+ * @author Doran Kayoumi <doran.kayoumi@heig-vd.ch>
+ */
+
 package ch.heigvd.iict.sym.labo1
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import ch.heigvd.iict.sym.labo1.helpers.*
