@@ -33,9 +33,6 @@ Tous les fichiers de traduction `strings.xml` se trouvent dans un dossier `value
 ![](doc/language.png)
 
 
-
-
-
 Dans le cas où il manquerait une traduction pour l'une des langues additionnelle, l'application va compiler sans problème et  elle va utiliser la/les traductions de la langue par défaut pour toutes les valeurs manquante. Par contre, si c'est une traduction de la langue par défaut qui est  manquante, l'application ne va pas pouvoir compiler, car Android ne  saura pas quoi utiliser comme valeurs lors du référencement de cette  valeur. Un comme si l'on souhaite utiliser une variable non déclarée.
 
 ### Champs textuels de saisie
@@ -109,7 +106,19 @@ Afin d'autorisé l'application à accédé à internet, nous avons du rajouter l
 
 ### Création et lancement de la nouvelle activité
 
-TODO Doran
+Comme décrit dans la donnée, il existe deux méthodes principales pour lancer une nouvelle activité. Celle de la librairie standard d'Android et une deuxième qui est introduite par la librairie AndroidX. La version historique/standard est officiellement dépréciée depuis la version [1.3.0-alpha04](https://developer.android.com/jetpack/androidx/releases/fragment#1.3.0-alpha04). Nous avons donc décidé d'utiliser la solution proposée par AndroidX.
+
+#### Librairie standard
+
+Vu que c'est une solution qui se trouve dans la  librairie standard, elle est actuellement fonctionnel/utilisable sur  toutes les versions d'Android.
+
+Même si c'est une solution qui est dans la librairie standard et qu'elle est toujours utilisable, **mais** depuis l'API 28, elle est déprécié et ne recevra plus de nouvelle release.
+
+#### Librairie AndroidX
+
+Cette nouvelle solution réduit la complexité du code  lors du lancement d'une nouvelle activité ou fragment et simplifie aussi la demande de permission (e.g. accéder à la caméra). Avec la méthode de la librairie standard, il faut manuellement vérifier la version d'Android utilisé et si l'autorisation n'a pas déjà était  autorisé. Avec la nouvelle API, ces vérifications sont intégrées dans les méthodes de celles-ci.
+
+Étant donné que c'est une librairie "récente", elle est seulement compatible avec des versions d'android >= **9.0**, et donc une application qui utilise cette solution ne fonctionnera pas sur des plus vieux appareil.
 
 ### Affichage d'une image
 Dans le fichier "drawable" nous avons rajouté l'image que nous souhaitions incorporé à l'application. Ensuite nous avec crée une balise "ImageView" dans le fichier ```activity_register.xml``` qui contient toutes les caractérstique de notre image. Nous lui avons ensuite renseigner le chemin d'accès de l'image avec la ligne : ```android:src="@drawable/pand_roux"```. Le dossier "res/drawable" est l'emplacement des images par défaut. En général on y trouve tous les drawable qui ne dépendent pas de la taille de l'écran. Pour les images matricielles, si l'on veut garentir la bonne qualité de notre image peut importe l'appareil, il est nécessaire de fournir différentes version de l'image : MDPI, HDPI, XHDPI, XXHDPI,XXXHDI. Si l'image n'est pas disponible, android va soomer l'image pour qu'elle utilise l'espace qui lui est réservé. Cela va bien évidement déformer l'image et réduire ça qualité. C'est donc beaucoup plus judicieux d'utiliser des images vectorielles car elles sont scalables et ne perdent pas en qualité. Cependant les images vectorielles sont plus généralement utilisé pour des illustrations comme des logos et non pour des images.
